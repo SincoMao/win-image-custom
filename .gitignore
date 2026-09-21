@@ -1,0 +1,12 @@
+# 工作副本与产物
+ISO-Work/
+*.iso
+
+# 日志
+*.log
+Logs/
+
+# 编辑器与系统
+.vscode/
+Thumbs.db
+Desktop.ini
