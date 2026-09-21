@@ -63,6 +63,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\06-verify.ps1
 | [docs/07-design-anti-revival.md](docs/07-design-anti-revival.md) | 第 7 章 防复活设计与约束红线 |
 | [docs/08-maintenance-new-builds.md](docs/08-maintenance-new-builds.md) | 第 8 章 适配新版 Windows 11 的维护指南 |
 | [docs/09-troubleshooting.md](docs/09-troubleshooting.md) | 第 9 章 故障排除 |
+| [docs/10-ai-assisted-customization.md](docs/10-ai-assisted-customization.md) | 第 10 章 使用 AI 工具完成定制（提示词规范与模板） |
 
 ## 目录结构
 
