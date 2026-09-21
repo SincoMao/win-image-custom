@@ -56,8 +56,14 @@ try {
     Check ((Test-Path "${r}efi\microsoft\boot\efisys_noprompt.bin") -or (Test-Path "${r}efi\microsoft\boot\efisys.bin")) 'EFI boot image present'
     [void][xml](Get-Content "${r}autounattend.xml" -Raw)
     $u = Get-Content "${r}autounattend.xml" -Raw
-    $escName = [System.Security.SecurityElement]::Escape($LocalAdminName)
-    Check ($u -match '<AcceptEula>true</AcceptEula>' -and $u -match '<ProtectYourPC>0</ProtectYourPC>' -and $u.Contains("<Name>$escName</Name>")) 'unattend content (EULA/ProtectYourPC/local admin account)'
+    Check ($u -match '<AcceptEula>true</AcceptEula>') 'unattend accepts EULA'
+    if ([string]::IsNullOrWhiteSpace($LocalAdminName)) {
+        Check (-not ($u -match '<LocalAccount')) 'unattend creates no account (stock OOBE)'
+        Check (-not ($u -match '<ProtectYourPC>')) 'unattend leaves OOBE/privacy pages to the user (stock OOBE)'
+    } else {
+        $escName = [System.Security.SecurityElement]::Escape($LocalAdminName)
+        Check ($u.Contains("<Name>$escName</Name>")) "unattend pre-creates account '$LocalAdminName'"
+    }
 
     $idx = Get-EditionIndex -ImageFile "${r}sources\install.wim"
     Check ($idx -ge 1) 'edition index resolvable in output WIM' "index $idx"

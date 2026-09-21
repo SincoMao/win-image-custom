@@ -99,8 +99,8 @@ AI 仅负责执行与监控。
    docs\03-pipeline.md、docs\07-design-anti-revival.md、
    docs\09-troubleshooting.md，然后向我复述执行流程与约束红线，待我确认后再继续。
 2. 将 config.ps1 中的 $IsoPath 改为 D:\Win11-25H2\Win11_Pro.iso，
-   $EditionName 改为 "Windows 11 专业版"，$LocalAdminName 按我的需要设置，
-   $LocalAdminPassword 留空，其余开关保持默认。
+   $EditionName 改为 "Windows 11 专业版"，$LocalAdminName 保持为空
+   （不预建账户，OOBE 流程与官方一致），其余开关保持默认。
    注意：config.ps1 必须以 UTF-8 with BOM 编码保存，修改后验证 BOM 仍然存在。
 
 执行要求：

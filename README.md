@@ -21,7 +21,7 @@ ISO：移除或关闭阻碍开发效率的安全组件，同时保持系统完�
 | 跳过安装硬件检测 | `Setup\LabConfig` 四项 Bypass 置 1 | `BypassInstallChecks` |
 | 关闭遥测与 CEIP | `DataCollection AllowTelemetry=0` | `DisableTelemetry` |
 | 关闭熔断/幽灵缓解 | 默认关闭（保留补丁），仅预留开关 | `DisableSpectreMeltdownMitigations` |
-| 无人值守安装 | `autounattend.xml`：跳过 EULA/OOBE、自动创建本地管理员（账户名与密码在 config.ps1 配置）、BypassNRO | 内置 |
+| 解除强制微软账户登录 | 镜像写入 `BypassNRO=1`，OOBE 的区域/隐私/用户名流程与官方介质一致；`autounattend.xml` 仅接受 EULA（可选预建本地管理员进入无人值守模式） | 内置 |
 
 ## 设计原则
 

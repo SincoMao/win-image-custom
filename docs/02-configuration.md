@@ -11,8 +11,8 @@
 | `$WorkDir` | `D:\ISO-Work` | 工作目录。流水线在其中创建 `ISO\`（解包副本）、`Mount\`（挂载点）、`Logs\`（日志）。 |
 | `$OutputIso` | `D:\Win11_Dev.iso` | 最终产物路径。重复运行时自动覆盖同名文件。 |
 | `$EditionName` | `Windows 11 专业版` | 用于在 WIM/ESD 索引中精确匹配版本的名称（`ImageName` 全等比较）。 |
-| `$LocalAdminName` | `dev` | `autounattend.xml` 自动创建的本地管理员账户名。长度不超过 20 字符，且不得包含 `[ ] : ; \| = , + * ? < > " / \`。 |
-| `$LocalAdminPassword` | 空 | 该账户的初始密码。留空表示空密码（首次登录无需输入），装机后应立即设置；也可在此预填，写入前会做 XML 转义。 |
+| `$LocalAdminName` | 空 | **留空（默认）**：不在镜像中预建任何账户，`autounattend.xml` 仅接受 EULA，OOBE 流程与官方介质完全一致；镜像中写入的 `BypassNRO=1` 已解除强制联网登录微软账户，安装者自行创建本地账户。**设置为用户名**：安装时自动创建该本地管理员并跳过 OOBE 各页面（无人值守模式）。长度不超过 20 字符，不得包含 `[ ] : ; \| = , + * ? < > " / \`。 |
+| `$LocalAdminPassword` | 空 | 预建账户的初始密码，仅在 `$LocalAdminName` 非空时生效；留空表示空密码，装机后应立即设置。写入前自动做 XML 转义。 |
 
 ### 关于 `$EditionName` 的取值
 

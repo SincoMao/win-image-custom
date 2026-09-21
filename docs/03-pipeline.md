@@ -71,18 +71,21 @@ PowerShell 脚本，既可由编排器串联执行，也可单独执行（单独
 
 ## 3.4 04-unattend.ps1 —— 应答文件与提交
 
-1. 在 `$WorkDir\ISO` 根目录生成 `autounattend.xml`：
-   - `windowsPE` 阶段：接受 EULA；
-   - `oobeSystem` 阶段：跳过 EULA/OEM 注册/联网账户/无线网络页面，
-     `ProtectYourPC=0`，创建本地管理员账户（账户名与初始密码由 `config.ps1`
-     的 `$LocalAdminName`、`$LocalAdminPassword` 决定，生成前做合法性校验与
-     XML 转义）；
-   - 不包含任何产品密钥与激活相关内容（红线）。
+1. 在 `$WorkDir\ISO` 根目录生成 `autounattend.xml`，两种模式由 `$LocalAdminName` 决定：
+   - **默认模式（`$LocalAdminName` 留空）**：应答文件仅接受 EULA，不包含任何
+     oobeSystem 设置。OOBE 的区域、键盘、网络、隐私、用户名创建等页面与官方
+     介质完全一致；唯一差异是镜像中已写入 `BypassNRO=1`（见第 4 章 4.2.5 节），
+     安装过程不再强制联网登录微软账户，安装者可自行创建本地账户。镜像不含任何
+     个人化信息，可批量部署。
+   - **无人值守模式（`$LocalAdminName` 设置了用户名）**：跳过 EULA/OEM 注册/
+     联网账户/无线网络页面，`ProtectYourPC=0`，并自动创建该本地管理员账户
+     （生成前做用户名合法性校验与 XML 转义）。
+   - 两种模式均不包含任何产品密钥与激活相关内容（红线）。
 2. XML 生成后立即做格式合法性校验（`[xml]` 解析），不合法则不提交。
 3. `dism /unmount-image /commit /checkintegrity` 提交并卸载映像。
    全程不存在 `/startcomponentcleanup` 与 `/resetbase`（红线）。
 
-> 密码留空意味着首次登录无需输入密码。装机后应立即通过
+> 无人值守模式下密码留空意味着首次登录无需输入密码，装机后应立即通过
 > `net user <账户名> *` 或"设置 → 账户 → 登录选项"设置密码。
 
 ## 3.5 05-repack.ps1 —— 双启动重打包

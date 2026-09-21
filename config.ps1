@@ -35,10 +35,15 @@ $BypassInstallChecks          = $true
 $DisableTelemetry             = $true
 $DisableSpectreMeltdownMitigations = $false   # keep mitigations by default; switch reserved
 
-# ---------- local administrator account (created by autounattend.xml) ----------
-$LocalAdminName     = 'dev'   # local admin account created during install
-$LocalAdminPassword = ''      # empty = blank password; set one after first logon
-                              # (net user <name> *), or pre-fill it here before running
+# ---------- install account (optional; see docs/03 section 3.4) ----------
+# empty (default): do NOT pre-create any account. autounattend.xml then only accepts the
+# EULA, and OOBE runs exactly like stock media - the BypassNRO=1 value written into the
+# image removes the forced online Microsoft-account sign-in, so whoever installs the ISO
+# creates their own local account. One ISO, deployable to any machine.
+# set a name here to pre-create a local administrator instead (OOBE pages are then
+# skipped for an unattended install); $LocalAdminPassword may stay blank.
+$LocalAdminName     = ''
+$LocalAdminPassword = ''
 
 # ---------- derived paths ----------
 $IsoRoot   = Join-Path $WorkDir 'ISO'
