@@ -74,15 +74,16 @@ PowerShell 脚本，既可由编排器串联执行，也可单独执行（单独
 1. 在 `$WorkDir\ISO` 根目录生成 `autounattend.xml`：
    - `windowsPE` 阶段：接受 EULA；
    - `oobeSystem` 阶段：跳过 EULA/OEM 注册/联网账户/无线网络页面，
-     `ProtectYourPC=0`，创建本地管理员账户 `Xinyu`（密码为空）；
+     `ProtectYourPC=0`，创建本地管理员账户（账户名与初始密码由 `config.ps1`
+     的 `$LocalAdminName`、`$LocalAdminPassword` 决定，生成前做合法性校验与
+     XML 转义）；
    - 不包含任何产品密钥与激活相关内容（红线）。
 2. XML 生成后立即做格式合法性校验（`[xml]` 解析），不合法则不提交。
 3. `dism /unmount-image /commit /checkintegrity` 提交并卸载映像。
    全程不存在 `/startcomponentcleanup` 与 `/resetbase`（红线）。
 
 > 密码留空意味着首次登录无需输入密码。装机后应立即通过
-> `net user Xinyu *` 或"设置 → 账户 → 登录选项"设置密码。如需在镜像中预置密码，
-> 编辑 `04-unattend.ps1` 中 `<Password><Value></Value>` 的 Value 后重跑流水线。
+> `net user <账户名> *` 或"设置 → 账户 → 登录选项"设置密码。
 
 ## 3.5 05-repack.ps1 —— 双启动重打包
 

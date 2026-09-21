@@ -70,10 +70,12 @@ netsh advfirewall show allprofiles
 
 ## 6.3 账户与首次登录
 
-`autounattend.xml` 自动创建本地管理员账户 **Xinyu**，密码为空，首次登录无需输入。
+`autounattend.xml` 自动创建本地管理员账户，账户名与初始密码由 `config.ps1` 的
+`$LocalAdminName`、`$LocalAdminPassword` 决定。默认配置（`dev` + 空密码）下，
+首次登录无需输入密码。
 
 > 空密码意味着任何可接触该设备者均可直接以管理员身份登录。进入系统后应立即执行
-> `net user Xinyu *` 设置密码，或通过"设置 → 账户 → 登录选项"添加。
+> `net user <账户名> *` 设置密码，或通过"设置 → 账户 → 登录选项"添加。
 > 该镜像面向隔离开发/测试环境，不建议在不可信网络中以空密码运行。
 
 ## 6.4 验收记录

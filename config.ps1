@@ -35,6 +35,11 @@ $BypassInstallChecks          = $true
 $DisableTelemetry             = $true
 $DisableSpectreMeltdownMitigations = $false   # keep mitigations by default; switch reserved
 
+# ---------- local administrator account (created by autounattend.xml) ----------
+$LocalAdminName     = 'dev'   # local admin account created during install
+$LocalAdminPassword = ''      # empty = blank password; set one after first logon
+                              # (net user <name> *), or pre-fill it here before running
+
 # ---------- derived paths ----------
 $IsoRoot   = Join-Path $WorkDir 'ISO'
 $MountDir  = Join-Path $WorkDir 'Mount'
